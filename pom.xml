@@ -98,7 +98,6 @@
             <groupId>com.github.SaiintBrisson</groupId>
             <artifactId>inventory-framework</artifactId>
             <version>2.0.6</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -126,11 +125,13 @@
                             <artifactSet>
                                 <excludes>
                                     <exclude>org.spigotmc:*</exclude>
-                                    <exclude>net.md_5:*</exclude>
-                                    <exclude>cglib:*</exclude>
-                                    <exclude>com.comphenix.**:*</exclude>
                                     <exclude>me.clip:*</exclude>
                                 </excludes>
+
+                                <includes>
+                                    <include>com.github.**:*</include>
+                                </includes>
+
                             </artifactSet>
                             <filters>
                                 <filter>
