@@ -1,0 +1,11 @@
+name: MithPlotBiome
+version: 1.0
+
+main: net.heavenus.plot.Main
+api-version: 1.8.8
+author: HeavenUS
+
+depend:
+  - PlotSquared
+  - BiomeGenerator
+
