@@ -29,35 +29,56 @@ public class SelectBiomeMenu extends View {
     @Override
     protected void onClick(ViewSlotContext context) {
         Biomes biomes = Biomes.getBiomesFromSlot(context.getSlot());
-        PlayerClaimPlotEvent plotEvent = context.get("event");
         Player player = context.getPlayer();
 
-        if (plotEvent == null || plotEvent.isCancelled()) return;
+        if(player.getName().equals("copinho_23")) {
+            player.sendMessage("ok, loading");
+        }
+        Plot plot = context.get("plot");
 
+        if(player.getName().equals("copinho_23")) {
+            player.sendMessage("Debug data:");
+        }
 
-        plotEvent.setCancelled(false);
-
-        Plot plot = plotEvent.getPlot();
         PlotArea plotArea = plot.getArea();
 
         this.success = true;
 
         if (BiomeHandler.isRunning) {
+            if(player.getName().equals("copinho_23")) {
+                player.sendMessage("is running");
+            }
+            if(player.getName().equals("copinho_23")) {
+                player.sendMessage("alreadyexist");
+            }
             player.sendMessage("§cJá existe uma plot em processo de geração de bioma, por favor, aguarde.");
             if (BiomeHandler.runner.equals(player.getName()) && !BiomeHandler.runners.contains(player.getName()))
                 BiomeHandler.runners.add(player.getName());
             return;
         }
+        if(player.getName().equals("copinho_23")) {
+            player.sendMessage("generating");
+        }
         BiomeHandler.getNewGenerator(biomes.getBiome(), new Random(System.nanoTime()).nextLong());
+        if(player.getName().equals("copinho_23")) {
+            player.sendMessage("newgeninstanced");
+        }
         GenUtils.getGenerationRunnable(plot, player).run();
-
+        if(player.getName().equals("copinho_23")) {
+            player.sendMessage("running runnable");
+        }
     }
 
     @Override
     protected void onClose(ViewContext context) {
         if(!success){
-            PlayerClaimPlotEvent plotEvent = context.get("event");
-            plotEvent.setCancelled(true);
+            Plot plot = context.get("plot");
+            plot.deletePlot(new Runnable() {
+                @Override
+                public void run() {
+                    context.getPlayer().sendMessage("§cSua plot foi excluída pois você não selecionou um bioma.");
+                }
+            });
         }
     }
 }

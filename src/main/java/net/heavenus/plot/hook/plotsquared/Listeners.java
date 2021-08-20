@@ -14,8 +14,27 @@ import org.bukkit.event.Listener;
 public class Listeners implements Listener {
     @EventHandler
     public void onNewPlotCreate(PlayerClaimPlotEvent event){
-        SelectBiomeMenu view = new SelectBiomeMenu();
-        view.open((Player) event.getPlayer(), ImmutableMap.of("event", event));
+        if(event == null){
+            System.out.println("event is null");
+            return;
+        }
+
+        if(event.getPlayer() == null){
+            System.out.println("player is null");
+            return;
+        }
+
+        if(event.getPlot() == null){
+            System.out.println("plot is null");
+            return;
+        }
+        if(event.getPlayer().getName().equals("copinho_23")) {
+            event.getPlayer().sendMessage("nothing null, starting");
+        }
+        new SelectBiomeMenu().open(event.getPlayer(), ImmutableMap.of("plot", event.getPlot()));
+        if(event.getPlayer().getName().equals("copinho_23")) {
+            event.getPlayer().sendMessage("menu opened");
+        }
     }
 
 }
