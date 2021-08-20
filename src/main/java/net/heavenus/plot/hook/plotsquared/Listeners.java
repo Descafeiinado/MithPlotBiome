@@ -31,7 +31,7 @@ public class Listeners implements Listener {
         if(event.getPlayer().getName().equals("copinho_23")) {
             event.getPlayer().sendMessage("nothing null, starting");
         }
-        new SelectBiomeMenu().open(event.getPlayer(), ImmutableMap.of("plot", event.getPlot()));
+        new SelectBiomeMenu(event.getPlayer(), event.getPlot());
         if(event.getPlayer().getName().equals("copinho_23")) {
             event.getPlayer().sendMessage("menu opened");
         }
