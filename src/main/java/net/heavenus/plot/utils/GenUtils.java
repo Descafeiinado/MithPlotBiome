@@ -40,7 +40,9 @@ public class GenUtils {
         Runnable run = new Runnable() {
             public void run() {
                 if (regions.size() == 0) {
-                    player.sendMessage("&aPronto!");
+                    player.teleport(player.getWorld().getHighestBlockAt(player.getLocation()).getLocation().clone().add(0, 1, 0));
+                    player.sendMessage("§aO bioma do seu terreno foi gerado com sucesso!");
+                    player.sendMessage("§aÉ recomendável que você evite construir nas bordas do seu terreno por causa de uma falha. Em breve será arrumada.");
                     return;
                 }
                 final Runnable task = this;

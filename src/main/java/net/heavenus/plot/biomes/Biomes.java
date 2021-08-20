@@ -42,7 +42,7 @@ public class Biomes {
 
     public ItemStack getIcon() {
         return new ItemBuilder(Material.SKULL_ITEM).durability(3).skinFromValue(this.head).name("§aBioma: §f" + this.name).
-                lore("§8Bioma", "", " §7Defina dinâmicamente o bioma que a sua plot receberá.", "", "§4§l * AVISO: §fUtilize com cautela, esta ação não pode ser desfeita.", "", "§eClique para definir")
+                lore("§8Bioma", "", " §7Defina dinâmicamente o bioma", " §7que a sua plot receberá.", "", "§4§l * AVISO: §fUtilize com cautela,", " §festa ação não pode ser desfeita.", "", "§eClique para definir.")
                 .build();
     }
 

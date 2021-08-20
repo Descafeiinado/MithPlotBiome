@@ -15,6 +15,7 @@ import net.heavenus.plot.biomes.Biomes;
 import net.heavenus.plot.menu.library.PagedPlayerMenu;
 import net.heavenus.plot.utils.BukkitUtils;
 import net.heavenus.plot.utils.GenUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -117,7 +118,12 @@ public class SelectBiomeMenu extends PagedPlayerMenu {
 
         setItems(items);
         register(Main.getInstance());
-        open();
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                open();
+            }
+        }, 60L);
     }
 
     public void cancel() {
@@ -130,7 +136,6 @@ public class SelectBiomeMenu extends PagedPlayerMenu {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent evt) {
         if (evt.getPlayer().equals(this.player)) {
-            cancel();
             if (this.plot != null) {
                 plot.deletePlot(new Runnable() {
                     @Override
@@ -139,6 +144,7 @@ public class SelectBiomeMenu extends PagedPlayerMenu {
                     }
                 });
             }
+            cancel();
         }
 
     }
@@ -146,7 +152,6 @@ public class SelectBiomeMenu extends PagedPlayerMenu {
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent evt) {
         if (evt.getPlayer().equals(this.player)) {
-            cancel();
             if (this.plot != null) {
                 plot.deletePlot(new Runnable() {
                     @Override
@@ -155,6 +160,7 @@ public class SelectBiomeMenu extends PagedPlayerMenu {
                     }
                 });
             }
+            cancel();
         }
     }
 
