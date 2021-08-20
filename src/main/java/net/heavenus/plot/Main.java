@@ -1,5 +1,6 @@
 package net.heavenus.plot;
 
+import net.heavenus.plot.biomes.Biomes;
 import net.heavenus.plot.hook.PlotSquaredHook;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -9,6 +10,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         PlotSquaredHook.setupHook();
+        Biomes.setupBiomes();
         getLogger().info("O plugin foi iniciado.");
     }
 
