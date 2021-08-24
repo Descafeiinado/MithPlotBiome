@@ -16,12 +16,17 @@ public class Biomes {
     protected String name, head;
     protected Integer slot;
     protected Biome biome;
-
+    protected boolean defaultEmpty;
     public Biomes(String name, Integer slot, String head, Biome biome) {
         this.name = name;
         this.slot = slot;
         this.head = head;
         this.biome = biome;
+
+        if(biome == null){
+            defaultEmpty = true;
+        }
+
     }
 
     public String getName() {
@@ -38,6 +43,10 @@ public class Biomes {
 
     public String getHead() {
         return head;
+    }
+
+    public boolean isDefaultEmpty() {
+        return defaultEmpty;
     }
 
     public ItemStack getIcon() {
@@ -63,6 +72,8 @@ public class Biomes {
         biomes.add(new Biomes("Nevasca", 13, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGYxMmJmNzY4MTFkZjJjMDIwY2VjZDM0Y2Q4ZDFmMmFlZDI4YTU2MDY3NDMyODEzMGQyZDM1YTBlOWI1YzdiOSJ9fX0=", Biome.ICE_PLAINS));
         biomes.add(new Biomes("Ilha de Cogumelos", 14, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWE0NWQxYjQxN2NiZGRjMjE3NjdiMDYwNDRlODk5YjI2NmJmNzhhNjZlMjE4NzZiZTNjMDUxNWFiNTVkNzEifX19", Biome.MUSHROOM_ISLAND));
         biomes.add(new Biomes("Savanna", 15, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjExNmI5ZDhkZjM0NmEyNWVkZDA1Zjg0MmU3YTkzNDViZWFmMTZkY2E0MTE4YWJmNWE2OGM3NWJjYWFlMTAifX19", Biome.SAVANNA));
+        biomes.add(new Biomes("Nenhum", 15, "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ0OWI5MzE4ZTMzMTU4ZTY0YTQ2YWIwZGUxMjFjM2Q0MDAwMGUzMzMyYzE1NzQ5MzJiM2M4NDlkOGZhMGRjMiJ9fX0=", null));
+
     }
 
 }

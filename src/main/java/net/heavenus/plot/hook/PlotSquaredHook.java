@@ -14,4 +14,7 @@ public class PlotSquaredHook {
         Bukkit.getPluginManager().registerEvents(new Listeners(), Main.getInstance());
     }
 
+    public static PlotAPI getPlotAPI() {
+        return plotAPI;
+    }
 }

@@ -9,6 +9,7 @@ import com.intellectualcrafters.plot.object.PlotArea;
 import com.intellectualcrafters.plot.object.RegionWrapper;
 import com.intellectualcrafters.plot.util.block.GlobalBlockQueue;
 import com.intellectualcrafters.plot.util.block.LocalBlockQueue;
+import net.heavenus.plot.hook.PlotSquaredHook;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -22,13 +23,13 @@ import java.util.Set;
 
 public class GenUtils {
 
-    public static Runnable getGenerationRunnable(Plot plot, Player player){
+    public static Runnable getGenerationRunnable(Plot plot, Player player) {
 
         int height;
 
         PlotArea plotworld = plot.getArea();
         if (plotworld instanceof ClassicPlotWorld) {
-            height = ((ClassicPlotWorld)plotworld).PLOT_HEIGHT;
+            height = ((ClassicPlotWorld) plotworld).PLOT_HEIGHT;
         } else {
             height = 64;
         }
@@ -78,9 +79,16 @@ public class GenUtils {
                                         if (!contains)
                                             for (int y = 0; y < 164; y++) {
                                                 Block block = world.getBlockAt(X, y, Z);
-                                                short cid = (short)block.getTypeId();
-                                                if (cid != 0)
-                                                    blocks[i][j][y] = block.getState();
+                                                Location location = new Location(world, X, y, Z);
+                                                com.intellectualcrafters.plot.object.Location plotLocation = locationToPlot(location);
+
+                                                if (plotLocation.isPlotArea() && !plotLocation.isPlotRoad() && !plotLocation.isUnownedPlotArea()) {
+
+
+                                                    short cid = (short) block.getTypeId();
+                                                    if (cid != 0)
+                                                        blocks[i][j][y] = block.getState();
+                                                }
                                             }
                                     }
                                 }
@@ -99,7 +107,7 @@ public class GenUtils {
                                         if (x == bx || x == ex || z == bz || z == ez) {
                                             LocalBlockQueue queue = GlobalBlockQueue.IMP.getNewQueue(worldname, false);
                                             ChunkLoc chunk = new ChunkLoc(x, z);
-                                            BlockState[][][] blocks = (BlockState[][][])blockMap.get(chunk);
+                                            BlockState[][][] blocks = (BlockState[][][]) blockMap.get(chunk);
                                             for (int i = 0; i < 16; i++) {
                                                 for (int j = 0; j < 16; j++) {
                                                     int X = (x << 4) + i;
@@ -115,14 +123,19 @@ public class GenUtils {
                                                         if (!contains)
                                                             for (int y = 0; y < 164; y++) {
                                                                 BlockState state = blocks[i][j][y];
-                                                                if (state != null) {
-                                                                    if (state.getClass().getName().endsWith("CraftBlockState")) {
-                                                                        state.update(true, false);
+                                                                Location location = new Location(world, X, y, Z);
+                                                                com.intellectualcrafters.plot.object.Location plotLocation = locationToPlot(location);
+
+                                                                if (plotLocation.isPlotArea() && !plotLocation.isPlotRoad() && !plotLocation.isUnownedPlotArea()) {
+                                                                    if (state != null) {
+                                                                        if (state.getClass().getName().endsWith("CraftBlockState")) {
+                                                                            state.update(true, false);
+                                                                        } else {
+                                                                            queue.setBlock(X, y, Z, (short) state.getTypeId(), state.getRawData());
+                                                                        }
                                                                     } else {
-                                                                        queue.setBlock(X, y, Z, (short)state.getTypeId(), state.getRawData());
+                                                                        queue.setBlock(X, y, Z, 0, 0);
                                                                     }
-                                                                } else {
-                                                                    queue.setBlock(X, y, Z, 0, 0);
                                                                 }
                                                             }
                                                     }
@@ -140,6 +153,10 @@ public class GenUtils {
             }
         };
         return run;
+    }
+
+    public static com.intellectualcrafters.plot.object.Location locationToPlot(org.bukkit.Location loc) {
+        return new com.intellectualcrafters.plot.object.Location(loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
     }
 
 }

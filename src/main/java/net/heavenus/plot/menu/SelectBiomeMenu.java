@@ -52,48 +52,53 @@ public class SelectBiomeMenu extends PagedPlayerMenu {
                         player.closeInventory();
                     } else {
 
-                        if(plot == null){
+                        if (plot == null) {
                             return;
                         }
 
                         Biomes biomes = this.hashMap.get(item);
 
                         if (biomes != null) {
-                            if (player.getName().equals("copinho_23")) {
-                                player.sendMessage("ok, loading");
-                            }
-
-                            if (player.getName().equals("copinho_23")) {
-                                player.sendMessage("Debug data:");
-                            }
-
-                            PlotArea plotArea = plot.getArea();
-
-                            if (BiomeHandler.isRunning) {
+                            if (!biomes.isDefaultEmpty()) {
                                 if (player.getName().equals("copinho_23")) {
-                                    player.sendMessage("is running");
+                                    player.sendMessage("ok, loading");
+                                }
+
+                                if (player.getName().equals("copinho_23")) {
+                                    player.sendMessage("Debug data:");
+                                }
+
+                                PlotArea plotArea = plot.getArea();
+
+                                if (BiomeHandler.isRunning) {
+                                    if (player.getName().equals("copinho_23")) {
+                                        player.sendMessage("is running");
+                                    }
+                                    if (player.getName().equals("copinho_23")) {
+                                        player.sendMessage("alreadyexist");
+                                    }
+                                    player.sendMessage("§cJá existe uma plot em processo de geração de bioma, por favor, aguarde.");
+                                    if (BiomeHandler.runner.equals(player.getName()) && !BiomeHandler.runners.contains(player.getName()))
+                                        BiomeHandler.runners.add(player.getName());
+                                    return;
                                 }
                                 if (player.getName().equals("copinho_23")) {
-                                    player.sendMessage("alreadyexist");
+                                    player.sendMessage("generating");
                                 }
-                                player.sendMessage("§cJá existe uma plot em processo de geração de bioma, por favor, aguarde.");
-                                if (BiomeHandler.runner.equals(player.getName()) && !BiomeHandler.runners.contains(player.getName()))
-                                    BiomeHandler.runners.add(player.getName());
-                                return;
+                                BiomeHandler.getNewGenerator(biomes.getBiome(), new Random(System.nanoTime()).nextLong());
+                                if (player.getName().equals("copinho_23")) {
+                                    player.sendMessage("newgeninstanced");
+                                }
+                                GenUtils.getGenerationRunnable(plot, player).run();
+                                if (player.getName().equals("copinho_23")) {
+                                    player.sendMessage("running runnable");
+                                }
+                                this.plot = null;
+                                player.closeInventory();
+                            } else {
+                                this.plot = null;
+                                player.closeInventory();
                             }
-                            if (player.getName().equals("copinho_23")) {
-                                player.sendMessage("generating");
-                            }
-                            BiomeHandler.getNewGenerator(biomes.getBiome(), new Random(System.nanoTime()).nextLong());
-                            if (player.getName().equals("copinho_23")) {
-                                player.sendMessage("newgeninstanced");
-                            }
-                            GenUtils.getGenerationRunnable(plot, player).run();
-                            if (player.getName().equals("copinho_23")) {
-                                player.sendMessage("running runnable");
-                            }
-                            this.plot = null;
-                            player.closeInventory();
                         }
                     }
             }
